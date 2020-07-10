@@ -50,7 +50,7 @@ class LinkedList:
         if current is None:
             return None
 
-        if current.value.key == key:
+        if current.key == key:
             self.head = current.next
             return current #it will just be garbage collected eventually (repointing to next in line)
 
@@ -59,7 +59,7 @@ class LinkedList:
             current = current.next
 
             while current is not None:
-                if current.value.key == key: # found it
+                if current.key == key: # found it
                     previous.next = current.next
                     return current #what was deleted
                 
@@ -185,7 +185,11 @@ class HashTable:
         # print(chain_in_arr)
         #see if the LL has the original key (pre hash)
         if chain_in_arr.find_by_key(key) != None:
-             print("That key value pair already exists!")
+             print("That key already exists!")
+             if chain_in_arr.find_by_key(key).value == value:
+                 print("That key AND value pair already exists!")
+             else:
+                 chain_in_arr.find_by_key(key).value = value
         else:
             chain_in_arr.insert_at_tail(key, value)
         # print("successful put", self.capacity)
