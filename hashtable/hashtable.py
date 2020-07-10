@@ -2,7 +2,7 @@ class HashTableEntry:
     """
     Linked List hash table key/value pair
     """
-    def __init__(self, key, value):
+    def __init__(self, key, value, next=None):
         self.key = key
         self.value = value
         self.next = None
@@ -11,6 +11,63 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
+    
+    def find_by_key(self, key):
+        current = self.head
+
+        while current is not None:
+            if current.key == key:
+                # print("here")
+                return current
+            current = current.next
+    
+    # def find_by_value(self, value):
+    #     current = self.head
+
+    #     while current is not None:
+    #         if current.value.value == value:
+    #             return current
+    #         current.next
+
+    def insert_at_tail(self, key, value):
+        node = HashTableEntry(key, value)
+
+        if self.head is None:
+            self.head = node
+        else:
+            current = self.head
+            print("adding to tail")
+            while current.next is not None:
+                current = current.next
+            current.next = node
+
+    def delete(self, key):
+        current = self.head
+
+        if current is None:
+            return None
+
+        if current.value.key == key:
+            self.head = current.next
+            return current #it will just be garbage collected eventually (repointing to next in line)
+
+        else:
+            previous = current
+            current = current.next
+
+            while current is not None:
+                if current.value.key == key: # found it
+                    previous.next = current.next
+                    return current #what was deleted
+                
+                else:
+                    previous = current
+                    current = current.next
+            
+            return None
 
 class HashTable:
     """
@@ -22,9 +79,13 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
-        self.capacity = [None] * capacity
+        # LL = LinkedList()
+        self.capacity = []
+        for _ in range(0, capacity):
+            self.capacity.append(LinkedList())
         self.capacity_entered = capacity
         # self.delete_counter = 0
+        # print(self.capacity)
 
     def get_num_slots(self):
         """
@@ -63,6 +124,7 @@ class HashTable:
         # for byte in key:
         hash = hash * fnv_prime
         # print(int.from_bytes(bytes(key, 'utf-8'), 'little'))
+         # for byte in key:
         hash = hash ^ int.from_bytes(bytes(key, 'utf-8'), 'big')
             # hash = bytes(map(operator.xor, hash.to_bytes(14, 'big'),byte.encode('utf-8')))
         # print(hash)
@@ -77,7 +139,11 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
+        hash = 5381
 
+        for char in key:
+            hash = ((hash << 5) + hash) + ord(char)
+        return hash
 
     def hash_index(self, key):
         """
@@ -88,14 +154,14 @@ class HashTable:
         return self.fnv1(key) % self.capacity_entered
         #return self.djb2(key) % self.capacity
 
-    def hash_index2(self, key):
-        """
-        Take an arbitrary key and return a valid integer index
-        between within the storage capacity of the hash table.
-        """
-        # print(self.fnv1(key) % len(self.capacity))
-        return self.fnv1(key) % len(self.capacity)
-        #return self.djb2(key) % self.capacity
+    # def hash_index2(self, key):
+    #     """
+    #     Take an arbitrary key and return a valid integer index
+    #     between within the storage capacity of the hash table.
+    #     """
+    #     # print(self.fnv1(key) % len(self.capacity))
+    #     return self.fnv1(key) % len(self.capacity)
+    #     #return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
@@ -108,9 +174,21 @@ class HashTable:
         # Your code here
         new_key = self.hash_index(key)
         
-        self.capacity[new_key] = value
+        if self.capacity[new_key] != None:
+            print("warning about to overwrite with PUT")
 
-        # ##  print(self.capacity)
+        #self.capacity[new_key] = value # without linked list this is fine
+
+
+        #find the LL by the key
+        chain_in_arr = self.capacity[new_key]
+        # print(chain_in_arr)
+        #see if the LL has the original key (pre hash)
+        if chain_in_arr.find_by_key(key) != None:
+             print("That key value pair already exists!")
+        else:
+            chain_in_arr.insert_at_tail(key, value)
+        # print("successful put", self.capacity)
 
 
 
@@ -124,18 +202,21 @@ class HashTable:
         """
         # Your code here
         new_key = self.hash_index(key)
-        if len(self.capacity) - 1 >= new_key:
-            # print(f"original num {new_key} minus gone from arr {self.delete_counter}", new_key - self.delete_counter)
-            # print("new", new_key)
-            # self.capacity.pop(new_key - (self.capacity_entered - len(self.capacity))) 
-                    # - self.delete_counter
-            # self.delete_counter += 1
-            self.capacity[new_key]= None
-            print("new array", self.capacity)
+        #pre LL
+        # if len(self.capacity) - 1 >= new_key:
+        #      self.capacity[new_key]= None
+        #     print("new array", self.capacity)
+        # else:
+        #     print("Warning")
+        
+        #find the LL by the key
+        chain_in_arr = self.capacity[new_key]
+        #see if the LL has the original key (pre hash)
+        if chain_in_arr.find_by_key(key) == None:
+             print("That key value pair doesn't exist!")
         else:
-            print("Warning")
-        
-        
+            chain_in_arr.delete(key)
+        print("successful delete")
 
 
     def get(self, key):
@@ -148,13 +229,20 @@ class HashTable:
         """
         # Your code here
         new_key = self.hash_index(key)
-        # print("new key", new_key)
-        if len(self.capacity) - 1 >= new_key:
-            # print("hit", self.capacity[new_key])
-            return self.capacity[new_key]
+        # pre LL
+        # if len(self.capacity) - 1 >= new_key:
+        #     return self.capacity[new_key]
+        # else:
+        #     return None
+        chain_in_arr = self.capacity[new_key]
+        #see if the LL has the original key (pre hash)
+        if chain_in_arr.find_by_key(key) != None:
+             print("Found", chain_in_arr.find_by_key(key))
+             return chain_in_arr.find_by_key(key).value
         else:
-            # print("None")
-            return None
+            print("Couldn't find the droid you're looking for, even combed the desert")
+        print("successful get")
+
         
 
     def resize(self, new_capacity):
@@ -173,21 +261,21 @@ class HashTable:
           for i in addToList:
             self.capacity.append(i)
 # REHASHING 
-          for i in range(1, len(self.capacity)):
-            value = self.get(f"line_{i}")
+        #   for i in range(1, len(self.capacity)):
+        #     value = self.get(f"line_{i}")
 
-           # print("value", value)
+        #    # print("value", value)
 
-            self.put(f"line_{i}", value)
+        #     self.put(f"line_{i}", value)
           replacement = self.capacity
           return replacement
         else:
           replacement = self.capacity[:new_capacity]
           #REHASHING
-          for i in range(1, len(self.capacity)):
-            value = self.get(f"line_{i}")
-            self.put(f"line_{i}", value)
-        #   return replacement
+        #   for i in range(1, len(self.capacity)):
+        #     value = self.get(f"line_{i}")
+        #     self.put(f"line_{i}", value)
+          return replacement
 
         self.capacity = replacement
 
