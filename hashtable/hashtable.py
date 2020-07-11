@@ -84,8 +84,12 @@ class HashTable:
         for _ in range(0, capacity):
             self.capacity.append(LinkedList())
         self.capacity_entered = capacity
-        # self.delete_counter = 0
+        self.entry_counter = 0
+        self.load_factor = self.entry_counter / self.capacity_entered
         # print(self.capacity)
+
+        if self.load_factor > .7:
+            self.resize(len(self.capacity) * 2)
 
     def get_num_slots(self):
         """
@@ -107,7 +111,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        return self.load_factor
 
     def fnv1(self, key):
         """
@@ -182,16 +186,18 @@ class HashTable:
 
         #find the LL by the key
         chain_in_arr = self.capacity[new_key]
+
         # print(chain_in_arr)
         #see if the LL has the original key (pre hash)
         if chain_in_arr.find_by_key(key) != None:
              print("That key already exists!")
              if chain_in_arr.find_by_key(key).value == value:
                  print("That key AND value pair already exists!")
-             else:
+             else: # OVERWRITE THE VALUE
                  chain_in_arr.find_by_key(key).value = value
         else:
             chain_in_arr.insert_at_tail(key, value)
+            self.entry_counter += 1
         # print("successful put", self.capacity)
 
 
@@ -220,6 +226,7 @@ class HashTable:
              print("That key value pair doesn't exist!")
         else:
             chain_in_arr.delete(key)
+        self.entry_counter -= 1
         print("successful delete")
 
 
@@ -257,6 +264,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
+
+
         replacement = []
         
         if new_capacity >= self.capacity_entered:
@@ -271,7 +280,13 @@ class HashTable:
         #    # print("value", value)
 
         #     self.put(f"line_{i}", value)
+
+          for i in range(0, len(self.capacity)):
+              if self.capacity[i] != None:
+                self.put(self.capacity[i].head.key, self.capacity[i].head.value)
+
           replacement = self.capacity
+          
           return replacement
         else:
           replacement = self.capacity[:new_capacity]
@@ -282,6 +297,7 @@ class HashTable:
           return replacement
 
         self.capacity = replacement
+        print(self.capacity)
 
 
 
