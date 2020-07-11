@@ -283,34 +283,28 @@ class HashTable:
 
           for i in range(0, len(self.capacity)):
             if self.capacity[i] != None:
-              if self.capacity[i].head != None:#  and 
+              if self.capacity[i].head != None:
                     current = self.capacity[i].head
                     print("current next", current)
                     if current.next == None:
-                        # self.put(current.key, current.value)
-                        replacement.append(current)
+                        replacement.append(current) # do the first one
                         # print("being done")
                     
                     while current.next != None:
-                            # self.put(current.key, current.value)
-                        replacement.append(current)
+                        replacement.append(current) #do everything inbetween
                         print("NOT being done")
                         current = current.next
-                    replacement.append(current)
+                    replacement.append(current) # has to do the last one
                     print("did it", replacement)
-                # self.put(current.key, current.value)
-                # replacement.append(current)
-                # for i in range(0, len(self.capacity)):
-                #     self.capacity[i] = None
+
           for i in range(0, len(self.capacity)):
                         self.capacity[i] = LinkedList()   
-                    # print(self.capacity)
+
           for i in replacement:
                         self.put(i.key, i.value)
-                # replacement = self.capacity
-        #   self.capacity = replacement
+
           print("should exist", len(replacement))
-        #   return replacement
+          print("should exist", self.capacity)
         else:
           replacement = self.capacity[:new_capacity]
           #REHASHING
