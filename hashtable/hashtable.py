@@ -1,3 +1,5 @@
+import math
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -90,6 +92,8 @@ class HashTable:
 
         if self.load_factor > .7:
             self.resize(len(self.capacity) * 2)
+        elif self.load_factor < .2:
+            self.resize(math.floor(len(self.capacity) / 2))
 
     def get_num_slots(self):
         """
@@ -316,6 +320,26 @@ class HashTable:
         # self.capacity = replacement
         # print(replacement)
 
+        # for i in range(0, len(self.capacity)):
+        #     if self.capacity[i] != None:
+        #       if self.capacity[i].head != None:
+        #             current = self.capacity[i].head
+        #             print("current next", current)
+        #             if current.next == None:
+        #                 replacement.append(current) # do the first one
+        #                 # print("being done")
+                    
+        #             while current.next != None:
+        #                 replacement.append(current) #do everything inbetween
+        #                 print("NOT being done")
+        #                 current = current.next
+        #             replacement.append(current) # has to do the last one
+        #             print("did it", replacement)
+        #   self.capacity = [None] * new_capacity
+        #   for i in range(0, len(self.capacity)):
+        #         self.capacity[i] = LinkedList()
+        #   for i in replacement:
+        #         self.put(i.key, i.value)
 
 
 if __name__ == "__main__":
