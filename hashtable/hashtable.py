@@ -284,6 +284,7 @@ class HashTable:
           for i in range(0, len(self.capacity)):
               if self.capacity[i] != None:
                 self.put(self.capacity[i].head.key, self.capacity[i].head.value)
+                # print("should not exist yet", self.get(self.capacity[i].head.next.key))
 
           replacement = self.capacity
           
