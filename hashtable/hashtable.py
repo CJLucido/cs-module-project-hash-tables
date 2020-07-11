@@ -282,13 +282,35 @@ class HashTable:
         #     self.put(f"line_{i}", value)
 
           for i in range(0, len(self.capacity)):
-              if self.capacity[i] != None:
-                self.put(self.capacity[i].head.key, self.capacity[i].head.value)
-                # print("should not exist yet", self.get(self.capacity[i].head.next.key))
-
-          replacement = self.capacity
-          
-          return replacement
+            if self.capacity[i] != None:
+              if self.capacity[i].head != None:#  and 
+                    current = self.capacity[i].head
+                    print("current next", current)
+                    if current.next == None:
+                        # self.put(current.key, current.value)
+                        replacement.append(current)
+                        # print("being done")
+                    
+                    while current.next != None:
+                            # self.put(current.key, current.value)
+                        replacement.append(current)
+                        print("NOT being done")
+                        current = current.next
+                    replacement.append(current)
+                    print("did it", replacement)
+                # self.put(current.key, current.value)
+                # replacement.append(current)
+                # for i in range(0, len(self.capacity)):
+                #     self.capacity[i] = None
+          for i in range(0, len(self.capacity)):
+                        self.capacity[i] = LinkedList()   
+                    # print(self.capacity)
+          for i in replacement:
+                        self.put(i.key, i.value)
+                # replacement = self.capacity
+        #   self.capacity = replacement
+          print("should exist", len(replacement))
+        #   return replacement
         else:
           replacement = self.capacity[:new_capacity]
           #REHASHING
@@ -297,8 +319,8 @@ class HashTable:
         #     self.put(f"line_{i}", value)
           return replacement
 
-        self.capacity = replacement
-        print(self.capacity)
+        # self.capacity = replacement
+        # print(replacement)
 
 
 
