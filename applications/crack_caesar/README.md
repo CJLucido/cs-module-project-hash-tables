@@ -99,3 +99,53 @@ lowercase letters.)
 
 No tests are provided for this one, but the result should be readable,
 with at most a handful of incorrect letters.
+
+fStrings = []    
+fChars = {}
+mostFreq = ['E', 'T', 'A', 'O', 'H', 'N', 'R', 'I', 'S', 'D', 'L', 'W', 'U',
+'G', 'F', 'B', 'M', 'Y', 'C', 'P', 'K', 'V', 'Q', 'J', 'X', 'Z']
+
+f = open("ciphertext.txt", "r")
+for fLine in f:
+    fStrings.append(fLine)
+
+for fLineHere in fStrings:
+    for character in fLineHere:
+        if character.isalpha():
+            if character in fChars:
+                fChars[character] +=1
+            else:
+                fChars[character] = 1
+
+def sum_total_char():
+    characters = list(fChars.items())
+    char_sorted = characters.sort(key=lambda pair: pair[1], reverse=True) #CANT DO THIS! sort is doing the operation to the actual array, doi!
+    sum_total = 0
+    list_percentages = {}
+
+    for pair in char_sorted:
+        sum_total += sum_total + pair[1]
+
+    for pair in char_sorted:
+        print(f'Letter: {pair[0]}, count: {pair[1]})
+        if pair[0] not in list_percentages:
+            list_percentages[pair[0]] = (pair[1] / sum_total)*100
+        else:
+            pass
+    i = 0
+    for pair in char_sorted:
+        if i < len(mostFreq):
+            pair[1] = mostFreq[i]
+            i++
+        else:
+            pass
+
+    return char_sorted
+
+def decode_txt:
+    for fLineHere in fStrings:
+        for pair in char_sorted:
+            fLineHere.replace(pair[0], pair[1])
+        
+    print(fStrings)
+            
