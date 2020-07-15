@@ -79,15 +79,9 @@ def decode_txt(char_sorted):
     f = open("ciphertext copy.txt", "rt")
     # fout = open('output.txt', "wt")
     data = f.read()
-    # for line in f:  
-        # print("1")
+
     for k in range(len(data)):
-        # for pair in char_sorted:
-        #         print(pair)
-        #         letterToChange = pair[0]
-                
-        #         letterToUse= pair[1]
-        #         data = data.replace(letterToChange,letterToUse)
+
         letterToChange = data[k]
                 
         letterToUse= data[k]
