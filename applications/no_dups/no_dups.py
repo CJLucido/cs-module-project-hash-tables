@@ -3,22 +3,15 @@ def no_dups(s):
     fStrings = []  
     fWords = []
 
-    for fLine in s:
-        fStrings.append(fLine)
+    fStrings = s.split(" ")
+    
+    for i in fStrings:
+        if i in fWords:
+            pass
+        else:
+            fWords.append(i)
 
-    for fLineHere in fStrings:
-        for character in fLineHere:
-            if character.isalpha():
-                character.lower()
-
-        fLineHere.split() #flinehere now a list
-        for i in fLineHere:
-            if i in fWords:
-                pass
-            else:
-                fWords.append(i)
-
-    print(" ".join(fWords))
+    return " ".join(fWords)
 
 
 if __name__ == "__main__":

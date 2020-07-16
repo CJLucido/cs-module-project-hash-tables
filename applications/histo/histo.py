@@ -1,40 +1,30 @@
 # Your code here
 
-
-
-
-    
-
-
 def print_sorted_numerical(wordCount):#may have to move above
 
     wordCountSorted = list(wordCount.items())
-    # print(characters)
-    # print(characters.sort())
     wordCountSorted.sort(key=lambda pair: pair[1], reverse=True)
-    
-    for word in wordCountSorted:
-        wordCountSorted[word] = wordCountSorted[word] * "#"
-  
-    
-    wordCountSorted[0] =  wordCountSorted[0] + "  "
-    
+    wordCountHashMark = []
     for pair in wordCountSorted:
+        if pair == wordCountSorted[0]:
+            wordCountHashMark.append((pair[0],"  " + (pair[1]*"#")))
+        else:
+            wordCountHashMark.append((pair[0],pair[1]*"#"))
+    
+    for pair in wordCountHashMark:
         print(f'{pair[0]}:{pair[1]}')
 
 def print_sorted_alpha(wordCount):
     wordCountSorted = list(wordCount.items())
-    # print(characters)
-    # print(characters.sort())
-    wordCountSorted.sort(key=lambda pair: pair[0], reverse=True)
-    
-    for word in wordCountSorted:
-        wordCountSorted[word] = wordCountSorted[word] * "#"
-  
-    
-    wordCountSorted[0] =  wordCountSorted[0] + "  "
-    
+    wordCountSorted.sort(key=lambda pair: pair[0])
+    wordCountAlpha = []
     for pair in wordCountSorted:
+        if pair == wordCountSorted[0]:
+           wordCountAlpha.append((pair[0],"  " + (pair[1]*"#"))) 
+        else: 
+            wordCountAlpha.append((pair[0],pair[1]*"#"))
+
+    for pair in wordCountAlpha:
         print(f'{pair[0]}:{pair[1]}')
 
 
@@ -54,10 +44,13 @@ def histo(file):
 
         fLineHere.split() #flinehere now a list
         for i in fLineHere:
-            if i in fWordCounts:
-                fWordCounts[i] += 1
+            if i.isalpha() and not i.isupper():
+                if i in fWordCounts:
+                    fWordCounts[i] += 1
+                else:
+                    fWordCounts[i] = 1
             else:
-                fWordCounts[i] = 1
+                pass
 
 
     
