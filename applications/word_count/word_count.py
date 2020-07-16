@@ -1,3 +1,5 @@
+import re
+
 def print_words(wordCount):#may have to move above
 
     wordCountSorted = list(wordCount.items())
@@ -24,9 +26,9 @@ def word_count(s):
     if len(s) <= 0:
         return {}
     else:
-        fStrings = s.split(" ")
-        for grouping in fStrings:
-                grouping.split("\t")
+        # fStrings = s.split(" ")
+        
+        fStrings = re.split("[\*|\n| |\t|\r]", s)
         
         fStrings = list(map(remove_ignored, fStrings))
         # print(fStrings)
