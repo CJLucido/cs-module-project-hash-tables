@@ -120,7 +120,7 @@ def expensive_seq(x, y, z):
 
         # print("ourZ", str((str(x), str(y),str(z))))
         # print("ourZ", zTable[str((str(x), str(y),str(z)))])
-        print("ourZ", zTable)
+        # print("ourZ", zTable)
         # print("ourZ", len(zTable))
         return zTable[str((str(x), str(y),str(z)))]
     else:
@@ -129,13 +129,13 @@ def expensive_seq(x, y, z):
         zValue2 = expensive_seq(x-2,y+2,z*2)
         zValue3 = expensive_seq(x-3,y+3,z*3)
         if zTable.get(str((str(x-1), str(y+1),str(z)))):
-            zValue1 = zTable.get(str((str(x-1), str(y+1),str(z))))
+            zValue1 = zTable[str((str(x-1), str(y+1),str(z)))]
             # print("woohoo")
         if zTable.get(str((str(x-2), str(y+2),str(z*2)))):
-            zValue2 = zTable.get(str((str(x-2), str(y+2),str(z*2))))
+            zValue2 = zTable[str((str(x-2), str(y+2),str(z*2)))]
             # print("woohoo2")
         if zTable.get(str((str(x-3), str(y+3),str(z*3)))):
-            zValue3 = zTable.get(str((str(x-3), str(y+3),str(z*3))))
+            zValue3 = zTable[str((str(x-3), str(y+3),str(z*3)))]
             # print("woohoo3")
         print(zValue1 + zValue2 + zValue3)
         zTable[str((str(x), str(y),str(z)))] = zValue1 + zValue2 + zValue3
