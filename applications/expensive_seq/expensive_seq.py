@@ -106,40 +106,39 @@ for i in xyTable:
 def expensive_seq(x, y, z):
     # Your code here
     yTable.put(str((x, y)), zTable)
-    # ourZ = yTable.get(str((x, y)))
     
     if x <= 0:
-        # ourZ.put(str(z), (int(y) + int(z)))
-        # print(ourZ.get(str(z)))
-        # print("len", len(ourZ.capacity))
-        # return ourZ.get(str(z))
         if zTable.get(str((str(x), str(y),str(z)))):
             pass
         else: 
             zTable[str((str(x), str(y),str(z)))] = (int(y) + int(z))
-
-        # print("ourZ", str((str(x), str(y),str(z))))
-        # print("ourZ", zTable[str((str(x), str(y),str(z)))])
-        # print("ourZ", zTable)
-        # print("ourZ", len(zTable))
         return zTable[str((str(x), str(y),str(z)))]
     else:
         print("newx", x)
-        zValue1 = expensive_seq(x-1,y+1,z)
-        zValue2 = expensive_seq(x-2,y+2,z*2)
-        zValue3 = expensive_seq(x-3,y+3,z*3)
-        if zTable.get(str((str(x-1), str(y+1),str(z)))):
-            zValue1 = zTable[str((str(x-1), str(y+1),str(z)))]
-            # print("woohoo")
-        if zTable.get(str((str(x-2), str(y+2),str(z*2)))):
-            zValue2 = zTable[str((str(x-2), str(y+2),str(z*2)))]
-            # print("woohoo2")
-        if zTable.get(str((str(x-3), str(y+3),str(z*3)))):
-            zValue3 = zTable[str((str(x-3), str(y+3),str(z*3)))]
-            # print("woohoo3")
-        print(zValue1 + zValue2 + zValue3)
-        zTable[str((str(x), str(y),str(z)))] = zValue1 + zValue2 + zValue3
-        return zValue1 + zValue2 + zValue3
+        zValue1 = ""
+        zValue2 = ""
+        zValue3 = ""
+        if zTable.get(str((str(x), str(y),str(z)))):
+            return zTable[str((str(x), str(y),str(z)))]
+        else:
+            if zTable.get(str((str(x-1), str(y+1),str(z)))):
+                zValue1 = zTable[str((str(x-1), str(y+1),str(z)))]
+            else:
+                zValue1 = expensive_seq(x-1,y+1,z)
+                # print("woohoo")
+            if zTable.get(str((str(x-2), str(y+2),str(z*2)))):
+                zValue2 = zTable[str((str(x-2), str(y+2),str(z*2)))]
+            else:
+                zValue2 = expensive_seq(x-2,y+2,z*2)
+                # print("woohoo2")
+            if zTable.get(str((str(x-3), str(y+3),str(z*3)))):
+                zValue3 = zTable[str((str(x-3), str(y+3),str(z*3)))]
+            else:
+                zValue3 = expensive_seq(x-3,y+3,z*3)
+                # print("woohoo3")
+            print(zValue1 + zValue2 + zValue3)
+            zTable[str((str(x), str(y),str(z)))] = zValue1 + zValue2 + zValue3
+            return zValue1 + zValue2 + zValue3
         # return expensive_seq(x-1,y+1,z) + expensive_seq(x-2,y+2,z*2) + expensive_seq(x-3,y+3,z*3)
     # if x <= 0: y + z
     # if x >  0: expensive_seq(x-1,y+1,z) + expensive_seq(x-2,y+2,z*2) + expensive_seq(x-3,y+3,z*3)
@@ -154,4 +153,4 @@ if __name__ == "__main__":
         x = expensive_seq(i*2, i*3, i*4)
         print(f"{i*2} {i*3} {i*4} = {x}")
 
-    # print(expensive_seq(150, 400, 800))
+    print(expensive_seq(150, 400, 800))
