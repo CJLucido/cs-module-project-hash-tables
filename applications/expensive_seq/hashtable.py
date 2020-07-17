@@ -41,7 +41,7 @@ class LinkedList:
             self.head = node
         else:
             current = self.head
-            print("adding to tail")
+            # print("adding to tail")
             while current.next is not None:
                 current = current.next
             current.next = node
@@ -182,8 +182,8 @@ class HashTable:
         # Your code here
         new_key = self.hash_index(key)
         
-        if self.capacity[new_key] != None:
-            print("warning about to overwrite with PUT")
+        # if self.capacity[new_key] != None: REMOVED FOR SPEED
+            # print("warning about to overwrite with PUT")
 
         #self.capacity[new_key] = value # without linked list this is fine
 
@@ -194,9 +194,10 @@ class HashTable:
         # print(chain_in_arr)
         #see if the LL has the original key (pre hash)
         if chain_in_arr.find_by_key(key) != None:
-             print("That key already exists!")
+            #  print("That key already exists!")
              if chain_in_arr.find_by_key(key).value == value:
-                 print("That key AND value pair already exists!")
+                 pass
+                #  print("That key AND value pair already exists!") REMOVED FOR SPEED
              else: # OVERWRITE THE VALUE
                  chain_in_arr.find_by_key(key).value = value
         else:
@@ -252,7 +253,7 @@ class HashTable:
         chain_in_arr = self.capacity[new_key]
         #see if the LL has the original key (pre hash)
         if chain_in_arr.find_by_key(key) != None:
-             print("Found", chain_in_arr.find_by_key(key))
+            #  print("Found", chain_in_arr.find_by_key(key)) REMOVED FOR SPEED
              return chain_in_arr.find_by_key(key).value
         else:
             print("Couldn't find the droid you're looking for, even combed the desert")
