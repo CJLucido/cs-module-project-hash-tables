@@ -1,6 +1,17 @@
 def no_dups(s):
     # Your code here
+    fStrings = []  
+    fWords = []
 
+    fStrings = s.split(" ")
+    
+    for i in fStrings:
+        if i in fWords:
+            pass
+        else:
+            fWords.append(i)
+
+    return " ".join(fWords)
 
 
 if __name__ == "__main__":
